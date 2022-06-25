@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Fields from './Fields';
+import { validation } from './validation';
+
+
 
 const SignUp = () => {
     const [data ,setData] = useState({
@@ -8,7 +11,13 @@ const SignUp = () => {
         password : "",
         confirmPassword : "",
         isAccepted : false
-    })
+    },)
+
+    // const [errors , setErrors] = useState({});
+    useEffect(() => {
+        // setErrors(validation(data))
+        console.log(validation(data))
+    },[data])
     const changeHandler = (event) => {
         if(event.target.type === "checkbox") {
             setData({...data , [event.target.name]:event.target.checked})
@@ -16,7 +25,6 @@ const SignUp = () => {
             setData({...data , [event.target.name]:event.target.value}) 
         }
         console.log(data)
-        console.log(event.target.type)
     }
 
     return (
