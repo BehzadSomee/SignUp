@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import styles from "./SignUp.module.css"
 import Fields from './Fields';
 import { validation } from './validation';
 
@@ -13,32 +17,62 @@ const SignUp = () => {
         isAccepted : false
     },)
 
-    // const [errors , setErrors] = useState({});
+    const [errors , setErrors] = useState({});
+    const [touched , setTouched] = useState({});
+
     useEffect(() => {
-        // setErrors(validation(data))
-        console.log(validation(data))
-    },[data])
+        setErrors(validation(data))
+    },[data ,touched])
     const changeHandler = (event) => {
         if(event.target.type === "checkbox") {
             setData({...data , [event.target.name]:event.target.checked})
         }else {
             setData({...data , [event.target.name]:event.target.value}) 
         }
-        console.log(data)
+        // console.log(data)
     }
 
+    const touchHandler = event => {
+        setTouched({ ...touched , [event.target.name]:true })
+    }
+
+    const submitHandler = (event) => {
+        event.preventDefault();
+        
+        if (!Object.keys(errors).length) {
+            notify("success");
+        }else {setTouched({
+            name : true,
+            email : true,
+            password : true,
+            confirmPassword : true,
+            isAccepted : true,
+            
+        })
+        notify();
+        }
+    }
+
+    const notify = (type) => {
+        if(type === "success"){
+            toast.success("BARIKALA"); 
+        }else{
+            toast.error("SHAME ON YOU")
+        }
+    }
     return (
         <div>
             <h2>Sign Up</h2>
-            <form>
-            <Fields label="Name" type="text" name="name" VAL={data.name} CHANGE={changeHandler} />
-            <Fields label="Email" type="email" name="email" VAL={data.email} CHANGE={changeHandler} />
-            <Fields label="Password" type="password" name="password" VAL={data.password} CHANGE={changeHandler} />
-            <Fields label="Confirm Password" type="password" name="confirmPassword" VAL={data.confirmPassword} CHANGE={changeHandler} />
-            <Fields label="I accept terms of privacy policy" type="checkbox" name="isAccepted" VAL={data.isAccepted} CHANGE={changeHandler} />
+            <form onSubmit={submitHandler}>
+            <Fields errors={errors} touched={touched} id="name" label="Name" type="text" name="name" VAL={data.name} CHANGE={changeHandler} TOUCH={touchHandler} />
+            <Fields errors={errors} touched={touched} id="email" label="Email" type="email" name="email" VAL={data.email} CHANGE={changeHandler} TOUCH={touchHandler} />
+            <Fields errors={errors} touched={touched} id="password" label="Password" type="password" name="password" VAL={data.password} CHANGE={changeHandler} TOUCH={touchHandler} />
+            <Fields errors={errors} touched={touched} id="confirmPassword" label="Confirm Password" type="password" name="confirmPassword" VAL={data.confirmPassword} CHANGE={changeHandler} TOUCH={touchHandler} />
+            <Fields errors={errors} touched={touched} id="isAccepted" label="I accept terms of privacy policy" type="checkbox" name="isAccepted" VAL={data.isAccepted} CHANGE={changeHandler} TOUCH={touchHandler} />
             <a href='#'>Login</a>
-            <button>Sign Up</button>
+            <button type='submit'>Sign Up</button>
             </form> 
+            <ToastContainer />
         </div>
     );
 };
