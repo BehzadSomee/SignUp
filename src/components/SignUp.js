@@ -68,11 +68,13 @@ const SignUp = () => {
             <Fields errors={errors} touched={touched} id="email" label="Email" type="email" name="email" VAL={data.email} CHANGE={changeHandler} TOUCH={touchHandler} />
             <Fields errors={errors} touched={touched} id="password" label="Password" type="password" name="password" VAL={data.password} CHANGE={changeHandler} TOUCH={touchHandler} />
             <Fields errors={errors} touched={touched} id="confirmPassword" label="Confirm Password" type="password" name="confirmPassword" VAL={data.confirmPassword} CHANGE={changeHandler} TOUCH={touchHandler} />
-            <Fields errors={errors} touched={touched} id="isAccepted" label="I accept terms of privacy policy" type="checkbox" name="isAccepted" VAL={data.isAccepted} CHANGE={changeHandler} TOUCH={touchHandler} />
-                <div className={styles.formButtons}>
-                    <a href='#'>Login</a>
-                    <button type='submit'>Sign Up</button>
-                </div>
+            <div className={styles.checkContainer}>
+                <Fields errors={errors} touched={touched} id="isAccepted" label="I accept terms of privacy policy" type="checkbox" name="isAccepted" VAL={data.isAccepted} CHANGE={changeHandler} TOUCH={touchHandler} />
+            </div>
+            <div className={styles.formButtons}>
+                <a href='#'>Login</a>
+                <button type='submit'>Sign Up</button>
+            </div>
             </form> 
             <ToastContainer />
         </div>
