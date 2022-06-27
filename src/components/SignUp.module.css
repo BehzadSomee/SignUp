@@ -65,6 +65,19 @@
 
 }
 
+.checkContainer {
+    display: flex;
+    justify-content: space-between;
+} 
+
+.checkContainer :first-child {
+    color: #1a73e8;
+} 
+
+.checkContainer :nth-child(1) ,:nth-child(2) {
+    flex-direction: row;
+}
+
 @media (max-width: 440px) {
     .formContainer{
         padding: 20px;
